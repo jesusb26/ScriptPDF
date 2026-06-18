@@ -64,7 +64,7 @@ if ($payload) {
 # ====================================================
 function Show-Payload {
     Add-Type -AssemblyName System.Windows.Forms
-    [System.Windows.Forms.MessageBox]::Show('Ejecutando payload... Sistema comprometido!', 'Alerta de Seguridad')
+    [System.Windows.Forms.MessageBox]::Show('Ejecutando cambio en el payload', 'Alerta de Seguridad')
     
     $desktop = [Environment]::GetFolderPath("Desktop")
     $file = "$desktop\COMPROMETIDO.txt"
